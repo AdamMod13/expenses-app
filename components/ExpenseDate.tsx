@@ -8,10 +8,10 @@ const ExpenseDate: FC<ExpenseDateProps> = ({ expenseDate }) => {
 
   return (
     <>
-      <div>
-        <div>{month}</div>
-        <div>{year}</div>
-        <div>{day}</div>
+      <div className="flex flex-col items-center bg-gray-800 px-3 py-1 text-white border-solid border-white border-2 rounded-xl shadow shadow-white w-28">
+        <div className="font-medium text-sm">{month}</div>
+        <div className="text-sm">{year}</div>
+        <div className="font-semibold text-xl">{day}</div>
       </div>
     </>
   );
