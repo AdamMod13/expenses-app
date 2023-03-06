@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import ExpenseItem from "@/components/ExpenseItem";
 import { ExpenseItemType } from "@/Models/ExpenseItemModel";
+import NewExpense from "@/components/NewExpense/NewExpense";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,9 @@ export default function Home() {
   return (
     <>
       <main>
+        <div>
+          <NewExpense />  
+        </div>
         <div>
           {expenses.map((item: ExpenseItemType) => (
             <ExpenseItem expenseItem={item} />
