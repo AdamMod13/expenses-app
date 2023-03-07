@@ -24,9 +24,6 @@ const ExpenseItem: FC<ExpenseItemProps> = ({ expenseItem }) => {
             <div className="text-base font-bold text-white bg-purple-600 border-solid border-2 border-white p-2 rounded-xl">
               ${expenseItem.amount}
             </div>
-            <button onClick={clickHandler} className="">
-              Change title
-            </button>
           </div>
         </div>
       </Card>

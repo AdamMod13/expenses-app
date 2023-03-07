@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .custom-input-container {
+    @apply flex flex-row items-center space-x-2 
+  }
+
+  .custom-input {
+    @apply rounded-md px-3 py-1 text-sm;
+  }
+
+  .custom-label {
+    @apply font-semibold
+  }
+
+  .custom-button {
+    @apply bg-purple-700 text-white font-bold rounded-md px-3 py-2 shadow-md hover:bg-purple-800 active:translate-y-0.5 transform transition duration-100 ease-out
+  }
+}

@@ -28,15 +28,19 @@ export default function Home() {
     },
   ];
 
+  const addExpenseHandler = (expense: ExpenseItemType): void => {
+    console.log(expense)
+  }
+
   return (
     <>
       <main>
         <div>
-          <NewExpense />  
+          <NewExpense onAddExpense={addExpenseHandler}/>  
         </div>
         <div>
           {expenses.map((item: ExpenseItemType) => (
-            <ExpenseItem expenseItem={item} />
+            <ExpenseItem key={item.id} expenseItem={item} />
           ))}
         </div>
       </main>
