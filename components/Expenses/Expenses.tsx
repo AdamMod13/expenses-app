@@ -1,6 +1,7 @@
 import { ExpenseItemArrayProps, ExpenseItemType } from "@/Models/ExpenseItemModel";
 import React, { FC, useState } from "react";
 import ExpenseItem from "./ExpenseItem";
+import ExpensesChart from "./ExpensesChart";
 import ExpensesFilter from "./ExpensesFilter";
 import ExpensesList from "./ExpensesList";
 
@@ -19,6 +20,7 @@ const Expenses: FC<ExpenseItemArrayProps> = ({ expensesItemArray }) => {
   return (
     <div className="flex flex-col mx-4 bg-slate-300 shadow-md rounded-xl">
       <ExpensesFilter selected={filteredYear} onChangeFilter={filterChangeHandler}/>
+      <ExpensesChart expensesItemArray={filteredExpenses}/>
       <ExpensesList expensesItemArray={filteredExpenses} />
     </div>
   );
