@@ -2,6 +2,7 @@ import { ExpenseItemArrayProps, ExpenseItemType } from "@/Models/ExpenseItemMode
 import React, { FC, useState } from "react";
 import ExpenseItem from "./ExpenseItem";
 import ExpensesFilter from "./ExpensesFilter";
+import ExpensesList from "./ExpensesList";
 
 const Expenses: FC<ExpenseItemArrayProps> = ({ expensesItemArray }) => {
   //We should always use key property for mapping because its prevents from bugs and its more efficient
@@ -18,9 +19,7 @@ const Expenses: FC<ExpenseItemArrayProps> = ({ expensesItemArray }) => {
   return (
     <div className="flex flex-col mx-4 bg-slate-300 shadow-md rounded-xl">
       <ExpensesFilter selected={filteredYear} onChangeFilter={filterChangeHandler}/>
-      {filteredExpenses.map((item: ExpenseItemType) => (
-        <ExpenseItem key={item.id} expenseItem={item} />
-      ))}
+      <ExpensesList expensesItemArray={filteredExpenses} />
     </div>
   );
 };
