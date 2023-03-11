@@ -8,3 +8,7 @@ export type ExpenseItemType = {
 export interface ExpenseItemProps{
   expenseItem: ExpenseItemType
 };
+
+export interface ExpenseItemArrayProps{
+  expensesItemArray: ExpenseItemType[]
+};
