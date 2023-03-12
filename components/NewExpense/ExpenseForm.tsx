@@ -19,6 +19,7 @@ const ExpenseForm = ({ onSaveExpenseData }: any) => {
   const [enteredTitle, setEnteredTitle] = useState<string>("");
   const [enteredAmount, setEnteredAmount] = useState<number>();
   const [enteredDate, setEnteredDate] = useState<string>();
+  const [isValid, setIsValid] = useState<boolean>(true)
 
   const titleChangeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
     setEnteredTitle(event.target.value);
@@ -34,6 +35,13 @@ const ExpenseForm = ({ onSaveExpenseData }: any) => {
 
   const submitHandler = (event: FormEvent): void => {
     event.preventDefault();
+
+    if (enteredTitle.trim().length === 0 || !enteredAmount || !enteredDate) {
+      setIsValid(false);
+      return;
+    } else {
+      setIsValid(true);
+    }
 
     const expenseData: ExpenseItemType = {
       id: Math.random().toString(),
@@ -87,7 +95,7 @@ const ExpenseForm = ({ onSaveExpenseData }: any) => {
         />
       </div>
       <div>
-        <button type="submit" className="custom-button">
+        <button type="submit" className="custom-button" style={{ color: !isValid ? 'red' : 'white'}}>
           Add Expense
         </button>
       </div>

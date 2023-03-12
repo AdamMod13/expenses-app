@@ -5,7 +5,6 @@ const ChartBar = ({dataPoint, maxValue}: {dataPoint: DataPointType, maxValue: nu
   let barFillHeight = '0%';
 
   if (maxValue > 0) {
-    console.log(maxValue)
     barFillHeight = Math.round((dataPoint.value / maxValue) * 100) + "%";
   }
 
