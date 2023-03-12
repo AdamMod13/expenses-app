@@ -5,6 +5,8 @@ import ChartBar from './ChartBar'
 const Chart: FC<DataPointArrayProps> = ({dataPointArray}) => {
   const dataPointValues: number[] = dataPointArray.map((dataPoint: DataPointType) => dataPoint.value);
 
+  console.log(dataPointArray)
+
   const totalMaximum: number = Math.max(...dataPointValues);
 
   return (

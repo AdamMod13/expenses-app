@@ -1,5 +1,7 @@
+import { modalStyle } from "@/ComponentStyles/ModalStyle";
 import { ExpenseItemType } from "@/Models/ExpenseItemModel";
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import Modal from "react-modal";
 
 // Something to memorize we can use approach which is shown below or
 // we can do something like this define multiple states using only one useState
@@ -19,7 +21,8 @@ const ExpenseForm = ({ onSaveExpenseData }: any) => {
   const [enteredTitle, setEnteredTitle] = useState<string>("");
   const [enteredAmount, setEnteredAmount] = useState<number>();
   const [enteredDate, setEnteredDate] = useState<string>();
-  const [isValid, setIsValid] = useState<boolean>(true)
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>("")
 
   const titleChangeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
     setEnteredTitle(event.target.value);
@@ -35,12 +38,19 @@ const ExpenseForm = ({ onSaveExpenseData }: any) => {
 
   const submitHandler = (event: FormEvent): void => {
     event.preventDefault();
-
-    if (enteredTitle.trim().length === 0 || !enteredAmount || !enteredDate) {
-      setIsValid(false);
+    
+    if (enteredTitle.trim().length === 0) {
+      setAlertMessage("The expese has to have a title")
+      openModal();
       return;
-    } else {
-      setIsValid(true);
+    } else if (!enteredAmount) {
+      setAlertMessage("Amount cannot has to be greater than 0")
+      openModal();
+      return;
+    } else if (!enteredDate) {
+      setAlertMessage("Date input cannot be empty")
+      openModal();
+      return;
     }
 
     const expenseData: ExpenseItemType = {
@@ -56,50 +66,82 @@ const ExpenseForm = ({ onSaveExpenseData }: any) => {
     setEnteredDate("");
   };
 
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   return (
-    <form
-      className="flex flex-row justify-between items-center flex-wrap gap-2"
-      onSubmit={submitHandler}
-    >
-      <div className="custom-input-container">
-        <label className="custom-label">Title</label>
-        <input
-          type="text"
-          className="custom-input"
-          value={enteredTitle}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => titleChangeHandler(e)}
-        />
-      </div>
-      <div className="custom-input-container">
-        <label className="custom-label">Amount</label>
-        <input
-          type="number"
-          min="0.01"
-          step="0.01"
-          className="custom-input"
-          value={enteredAmount}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            amountChangeHandler(e)
-          }
-        />
-      </div>
-      <div className="custom-input-container">
-        <label className="custom-label">Date</label>
-        <input
-          type="date"
-          min="2022-01-01"
-          max="2024-01-01"
-          className="custom-input"
-          value={enteredDate}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => dateChangeHandler(e)}
-        />
-      </div>
-      <div>
-        <button type="submit" className="custom-button" style={{ color: !isValid ? 'red' : 'white'}}>
-          Add Expense
-        </button>
-      </div>
-    </form>
+    <div>
+      <form
+        className="flex flex-row justify-between items-center flex-wrap gap-2"
+        onSubmit={submitHandler}
+      >
+        <div className="custom-input-container">
+          <label className="custom-label">Title</label>
+          <input
+            type="text"
+            className="custom-input"
+            value={enteredTitle}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              titleChangeHandler(e)
+            }
+          />
+        </div>
+        <div className="custom-input-container">
+          <label className="custom-label">Amount</label>
+          <input
+            type="number"
+            min="0"
+            step="0.01"
+            className="custom-input"
+            value={enteredAmount}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              amountChangeHandler(e)
+            }
+          />
+        </div>
+        <div className="custom-input-container">
+          <label className="custom-label">Date</label>
+          <input
+            type="date"
+            min="2022-01-01"
+            max="2024-01-01"
+            className="custom-input"
+            value={enteredDate}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              dateChangeHandler(e)
+            }
+          />
+        </div>
+        <div>
+          <button type="submit" className="custom-button">
+            Add Expense
+          </button>
+        </div>
+      </form>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={modalStyle}
+        contentLabel="MODAL"
+      >
+        <div className="space-y-4">
+          <div className="flex flex-col space-y-2">
+            <h2 className="font-bold">WARNING</h2>
+            <p>Invalid field - {alertMessage}</p>
+          </div>
+          <div className="flex justify-center">
+            <button onClick={closeModal} className="bg-white text-black p-2 rounded-md">
+              Close
+            </button>
+          </div>
+        </div>
+      </Modal>
+    </div>
   );
 };
 
